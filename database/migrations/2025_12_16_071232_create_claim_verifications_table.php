@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('head_offices', function (Blueprint $table) {
+        Schema::create('claim_verifications', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-
-            // user yang merepresentasikan HO
-            $table->foreignId('user_id')
-                ->constrained()
-                ->restrictOnDelete()
-                ->cascadeOnUpdate();
+            $table->foreignId('claim_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('verifier_user_id')->constrained('users')->restrictOnDelete();
+            $table->string('status'); // APPROVE | PARTIAL_APPROVE | REJECT
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('head_offices');
+        Schema::dropIfExists('claim_verifications');
     }
 };

@@ -11,12 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('head_offices', function (Blueprint $table) {
+        Schema::create('retails', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            // data pembayaran klaim
+            $table->string('payment_account'); // contoh: BCA, Mandiri
+            $table->string('payment_number');  // nomor rekening / e-wallet
 
             // user yang merepresentasikan HO
             $table->foreignId('user_id')
+                ->constrained()
+                ->restrictOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreignId('distributor_id')
                 ->constrained()
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();
@@ -29,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('head_offices');
+        Schema::dropIfExists('retails');
     }
 };

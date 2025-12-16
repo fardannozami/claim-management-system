@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('head_offices', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('sku')->unique();
             $table->string('name');
-
-            // user yang merepresentasikan HO
-            $table->foreignId('user_id')
-                ->constrained()
-                ->restrictOnDelete()
-                ->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('head_offices');
+        Schema::dropIfExists('products');
     }
 };

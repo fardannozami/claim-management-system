@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('head_offices', function (Blueprint $table) {
+        Schema::create('promo_programs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-
-            // user yang merepresentasikan HO
-            $table->foreignId('user_id')
-                ->constrained()
-                ->restrictOnDelete()
-                ->cascadeOnUpdate();
+            $table->date('starts_at');
+            $table->date('ends_at');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('head_offices');
+        Schema::dropIfExists('promo_programs');
     }
 };
